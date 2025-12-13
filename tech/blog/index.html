@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harsh Parashar | Neural Logs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'monospace'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        cyber: {
+                            black: '#020202', // Darker black
+                            dark: '#080808',
+                            primary: '#00f3ff', // Cyan
+                            secondary: '#9d00ff', // Purple
+                            accent: '#ff003c', // Red/Pink
+                            green: '#00ff41', // Matrix Green
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #020202;
+            color: #ffffff;
+            cursor: crosshair; /* Gaming feel */
+        }
+
+        /* Animated Background Grid */
+        .bg-grid {
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+            opacity: 0.1;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        /* 3D Tilt Card Base */
+        .tilt-card {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.1s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tilt-card:hover {
+            border-color: rgba(0, 243, 255, 0.5);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
+        }
+
+        /* Inner Content Float */
+        .tilt-content {
+            transform: translateZ(20px);
+        }
+
+        /* HUD Corners */
+        .hud-corner {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
+        
+        .tilt-card:hover .hud-corner {
+            width: 15px;
+            height: 15px;
+            border-color: #00f3ff;
+            box-shadow: 0 0 5px #00f3ff;
+        }
+        
+        .tl { top: -1px; left: -1px; border-top-color: rgba(255,255,255,0.2); border-left-color: rgba(255,255,255,0.2); }
+        .tr { top: -1px; right: -1px; border-top-color: rgba(255,255,255,0.2); border-right-color: rgba(255,255,255,0.2); }
+        .bl { bottom: -1px; left: -1px; border-bottom-color: rgba(255,255,255,0.2); border-left-color: rgba(255,255,255,0.2); }
+        .br { bottom: -1px; right: -1px; border-bottom-color: rgba(255,255,255,0.2); border-right-color: rgba(255,255,255,0.2); }
+
+        /* Glitch Text */
+        .glitch-text {
+            position: relative;
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .glitch-text:hover::before {
+            left: 2px;
+            text-shadow: -1px 0 #ff003c;
+            animation: noise-anim-2 3s infinite linear alternate-reverse;
+        }
+        .glitch-text:hover::after {
+            left: -2px;
+            text-shadow: -1px 0 #00f3ff;
+            animation: noise-anim 2s infinite linear alternate-reverse;
+        }
+
+        @keyframes noise-anim {
+            0% { clip-path: inset(40% 0 61% 0); }
+            20% { clip-path: inset(92% 0 1% 0); }
+            40% { clip-path: inset(43% 0 1% 0); }
+            60% { clip-path: inset(25% 0 58% 0); }
+            80% { clip-path: inset(54% 0 7% 0); }
+            100% { clip-path: inset(58% 0 43% 0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020202; }
+        ::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 3px; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- Background Grid -->
+    <div class="bg-grid bg-grid-pattern"></div>
+    
+    <!-- Canvas for Matrix Rain (Optional Visuals) -->
+    <canvas id="matrixCanvas" class="fixed inset-0 z-0 opacity-[0.03] pointer-events-none"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 border-b border-white/5 bg-cyber-black/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="../index.html" class="flex items-center gap-2 group">
+                    <span class="font-mono text-xl text-cyber-primary group-hover:text-white transition-colors tracking-tighter">
+                        <span class="text-cyber-secondary">~</span>/tech/logs<span class="animate-pulse">_</span>
+                    </span>
+                </a>
+                
+                <a href="../index.html" class="group flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded hover:border-cyber-primary hover:bg-cyber-primary/10 transition-all">
+                    <i class="fas fa-power-off text-xs text-gray-400 group-hover:text-cyber-primary transition-colors"></i>
+                    <span class="font-mono text-xs text-gray-400 group-hover:text-white uppercase tracking-widest">System Exit</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header / Hero -->
+    <header class="pt-32 pb-16 relative z-10">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            
+            <!-- Status Badge -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-cyber-green/30 rounded-full bg-cyber-green/5 animate-float">
+                <div class="w-2 h-2 rounded-full bg-cyber-green animate-pulse"></div>
+                <span class="font-mono text-xs text-cyber-green tracking-widest">UPLINK ESTABLISHED</span>
+            </div>
+            
+            <!-- Main Title -->
+            <h1 class="text-6xl md:text-8xl font-display font-bold mb-8 text-white tracking-tighter leading-tight glitch-text" data-text="NEURAL LOGS">
+                NEURAL <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-primary to-cyber-secondary">LOGS</span>
+            </h1>
+            
+            <!-- Command Line Search -->
+            <div class="max-w-2xl mx-auto relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-cyber-primary to-cyber-secondary rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                <div class="relative flex items-center bg-cyber-dark border border-white/10 rounded-lg p-4 font-mono text-sm">
+                    <span class="text-cyber-primary mr-3 text-lg">></span>
+                    <span class="text-cyber-secondary mr-3">grep</span>
+                    <input type="text" placeholder='search "react architecture"...' class="bg-transparent border-none outline-none text-white w-full placeholder-gray-600 focus:placeholder-gray-500">
+                    <i class="fas fa-search text-gray-500"></i>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 pb-24 w-full relative z-10">
+        
+        <!-- Tech Tags -->
+        <div class="flex flex-wrap justify-center gap-3 mb-16 font-mono text-xs">
+            <button class="px-5 py-2 bg-cyber-primary text-black font-bold uppercase tracking-widest clip-path-slant hover:bg-white transition-colors">
+                [ All_Streams ]
+            </button>
+            <button class="px-5 py-2 bg-white/5 border border-white/10 text-gray-400 uppercase tracking-widest hover:border-cyber-secondary hover:text-cyber-secondary hover:bg-cyber-secondary/10 transition-all">
+                #Frontend
+            </button>
+            <button class="px-5 py-2 bg-white/5 border border-white/10 text-gray-400 uppercase tracking-widest hover:border-cyber-secondary hover:text-cyber-secondary hover:bg-cyber-secondary/10 transition-all">
+                #Backend
+            </button>
+            <button class="px-5 py-2 bg-white/5 border border-white/10 text-gray-400 uppercase tracking-widest hover:border-cyber-secondary hover:text-cyber-secondary hover:bg-cyber-secondary/10 transition-all">
+                #Artificial_Int
+            </button>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Article 1 -->
+            <article class="tilt-card group cursor-pointer h-full flex flex-col rounded-sm relative" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                <!-- HUD Corners -->
+                <div class="hud-corner tl"></div>
+                <div class="hud-corner tr"></div>
+                <div class="hud-corner bl"></div>
+                <div class="hud-corner br"></div>
+
+                <div class="h-52 overflow-hidden relative border-b border-white/5">
+                    <div class="absolute inset-0 bg-cyber-primary/20 mix-blend-overlay z-10 opacity-50 group-hover:opacity-0 transition-opacity"></div>
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110">
+                    <div class="absolute top-4 left-4 z-20 px-2 py-1 bg-black/90 border border-cyber-primary text-cyber-primary font-mono text-[10px] tracking-wider">
+                        SYS.ARCH
+                    </div>
+                </div>
+                
+                <div class="p-8 flex flex-col flex-grow tilt-content">
+                    <div class="font-mono text-[10px] text-gray-500 mb-4 flex justify-between items-center border-b border-white/5 pb-4">
+                        <span class="text-cyber-primary">ID: 8842</span>
+                        <span>// 14.12.2024</span>
+                    </div>
+                    
+                    <h2 class="text-xl font-bold font-display text-white mb-4 group-hover:text-cyber-primary transition-colors leading-tight">
+                        Scaling Microservices: The gRPC Protocol
+                    </h2>
+                    
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow font-mono opacity-80">
+                        Analyzing the shift from REST to binary protocols for high-throughput internal communication layers.
+                    </p>
+                    
+                    <div class="mt-auto pt-4 flex items-center justify-between text-xs font-mono uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
+                        <span>Execute_Read()</span>
+                        <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform text-cyber-primary"></i>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="tilt-card group cursor-pointer h-full flex flex-col rounded-sm relative" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                <div class="hud-corner tl"></div>
+                <div class="hud-corner tr"></div>
+                <div class="hud-corner bl"></div>
+                <div class="hud-corner br"></div>
+
+                <div class="h-52 overflow-hidden relative border-b border-white/5">
+                    <div class="absolute inset-0 bg-cyber-secondary/20 mix-blend-overlay z-10 opacity-50 group-hover:opacity-0 transition-opacity"></div>
+                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110">
+                    <div class="absolute top-4 left-4 z-20 px-2 py-1 bg-black/90 border border-cyber-secondary text-cyber-secondary font-mono text-[10px] tracking-wider">
+                        AI.DATA
+                    </div>
+                </div>
+                
+                <div class="p-8 flex flex-col flex-grow tilt-content">
+                    <div class="font-mono text-[10px] text-gray-500 mb-4 flex justify-between items-center border-b border-white/5 pb-4">
+                        <span class="text-cyber-secondary">ID: 9921</span>
+                        <span>// 08.12.2024</span>
+                    </div>
+                    
+                    <h2 class="text-xl font-bold font-display text-white mb-4 group-hover:text-cyber-secondary transition-colors leading-tight">
+                        RAG Pipelines with Vector Embeddings
+                    </h2>
+                    
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow font-mono opacity-80">
+                        Implementing memory in LLMs using Pinecone and LangChain for context-aware responses.
+                    </p>
+                    
+                    <div class="mt-auto pt-4 flex items-center justify-between text-xs font-mono uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
+                        <span>Execute_Read()</span>
+                        <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform text-cyber-secondary"></i>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="tilt-card group cursor-pointer h-full flex flex-col rounded-sm relative" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                <div class="hud-corner tl"></div>
+                <div class="hud-corner tr"></div>
+                <div class="hud-corner bl"></div>
+                <div class="hud-corner br"></div>
+
+                <div class="h-52 overflow-hidden relative border-b border-white/5">
+                    <div class="absolute inset-0 bg-cyber-accent/20 mix-blend-overlay z-10 opacity-50 group-hover:opacity-0 transition-opacity"></div>
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110">
+                    <div class="absolute top-4 left-4 z-20 px-2 py-1 bg-black/90 border border-cyber-accent text-cyber-accent font-mono text-[10px] tracking-wider">
+                        REACT.INT
+                    </div>
+                </div>
+                
+                <div class="p-8 flex flex-col flex-grow tilt-content">
+                    <div class="font-mono text-[10px] text-gray-500 mb-4 flex justify-between items-center border-b border-white/5 pb-4">
+                        <span class="text-cyber-accent">ID: 7734</span>
+                        <span>// 20.11.2024</span>
+                    </div>
+                    
+                    <h2 class="text-xl font-bold font-display text-white mb-4 group-hover:text-cyber-accent transition-colors leading-tight">
+                        Next.js 14: Server Actions Deep Dive
+                    </h2>
+                    
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow font-mono opacity-80">
+                        Eliminating API routes and handling mutations directly from server components securely.
+                    </p>
+                    
+                    <div class="mt-auto pt-4 flex items-center justify-between text-xs font-mono uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
+                        <span>Execute_Read()</span>
+                        <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform text-cyber-accent"></i>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+        
+        <!-- Load More -->
+        <div class="mt-20 text-center">
+            <button class="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-mono font-bold text-white transition-all duration-300 bg-transparent border border-white/20 rounded-sm hover:bg-white/5 hover:border-cyber-primary hover:shadow-[0_0_20px_rgba(0,243,255,0.3)]">
+                <span class="mr-2 uppercase tracking-widest text-xs">Load_More_Data</span>
+                <i class="fas fa-sync-alt group-hover:rotate-180 transition-transform duration-700 text-cyber-primary"></i>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 bg-black py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-cyber-green rounded-full animate-pulse"></div>
+                <span class="font-mono text-xs text-gray-600">SYSTEM HEALTH: 100%</span>
+            </div>
+            
+            <div class="font-mono text-[10px] text-gray-700 uppercase tracking-[0.2em]">
+                Terminating Session ID: 0x8842
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts for 3D Tilt & Matrix Rain -->
+    <script>
+        // --- 1. 3D Tilt Effect Logic ---
+        function handleTilt(e, card) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = ((y - centerY) / centerY) * -10; // Rotation Limit
+            const rotateY = ((x - centerX) / centerX) * 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        }
+
+        function resetTilt(card) {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        }
+
+        // --- 2. Matrix Rain Background ---
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        const cols = Math.floor(width / 20) + 1;
+        const ypos = Array(cols).fill(0);
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        function matrix() {
+            ctx.fillStyle = '#0001'; // Fade effect
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.fillStyle = '#00f3ff';
+            ctx.font = '10pt monospace';
+
+            ypos.forEach((y, ind) => {
+                const text = String.fromCharCode(Math.random() * 128);
+                const x = ind * 20;
+                ctx.fillText(text, x, y);
+                if (y > 100 + Math.random() * 10000) ypos[ind] = 0;
+                else ypos[ind] = y + 20;
+            });
+        }
+        setInterval(matrix, 50);
+    </script>
+
+</body>
+</html>
