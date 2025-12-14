@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tech Blog | Harsh Parashar</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Technical writings by Harsh Parashar on system design, full-stack engineering, and AI architecture.">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { background:#020202; color:#fff; }
+  </style>
+</head>
+
+<body class="font-mono">
+
+<!-- NAV -->
+<header class="border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
+    <a href="/tech/" class="text-cyan-400 text-sm tracking-widest">
+      ← BACK TO TECH
+    </a>
+    <span class="text-xs text-gray-500">NEURAL LOGS</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="py-20 text-center">
+  <h1 class="text-5xl md:text-6xl font-bold font-['Space_Grotesk']">
+    Neural <span class="text-cyan-400">Logs</span>
+  </h1>
+  <p class="text-gray-400 mt-4 max-w-xl mx-auto">
+    Long-form writings on scalable systems, real-world engineering, and applied AI.
+  </p>
+</section>
+
+<!-- BLOG LIST -->
+<main class="max-w-6xl mx-auto px-4 pb-24 grid md:grid-cols-2 gap-10">
+
+  <!-- POST 1 -->
+  <a href="/tech/blog/posts/scaling-microservices-grpc.html"
+     class="group block border border-white/10 p-8 hover:border-cyan-400 transition">
+    <div class="text-xs text-cyan-400 mb-2">SYSTEM DESIGN · 14 DEC 2024</div>
+    <h2 class="text-2xl font-bold mb-3 group-hover:text-cyan-400">
+      Scaling Microservices with gRPC
+    </h2>
+    <p class="text-gray-400 text-sm leading-relaxed">
+      Why REST fails at scale and how gRPC enables low-latency, high-throughput internal systems.
+    </p>
+  </a>
+
+  <!-- POST 2 -->
+  <a href="/tech/blog/posts/rag-vector-pipelines.html"
+     class="group block border border-white/10 p-8 hover:border-purple-400 transition">
+    <div class="text-xs text-purple-400 mb-2">AI ENGINEERING · 08 DEC 2024</div>
+    <h2 class="text-2xl font-bold mb-3 group-hover:text-purple-400">
+      Building RAG Pipelines with Vector Embeddings
+    </h2>
+    <p class="text-gray-400 text-sm leading-relaxed">
+      Practical architecture for memory-aware LLM systems using embeddings and retrieval.
+    </p>
+  </a>
+
+  <!-- POST 3 -->
+  <a href="/tech/blog/posts/nextjs-server-actions.html"
+     class="group block border border-white/10 p-8 hover:border-red-400 transition">
+    <div class="text-xs text-red-400 mb-2">FRONTEND ARCH · 20 NOV 2024</div>
+    <h2 class="text-2xl font-bold mb-3 group-hover:text-red-400">
+      Next.js Server Actions Explained
+    </h2>
+    <p class="text-gray-400 text-sm leading-relaxed">
+      How Server Actions remove API layers and simplify secure mutations.
+    </p>
+  </a>
+
+</main>
+
+<footer class="border-t border-white/10 py-6 text-center text-xs text-gray-600">
+  © Harsh Parashar · Neural Logs
+</footer>
+
+</body>
+</html>
