@@ -30,6 +30,7 @@
                             secondary: '#9d00ff', // Purple
                             accent: '#ff003c', // Red/Pink
                             green: '#00ff41', // Matrix Green
+                            warning: '#fcee0a', // Cyber Yellow
                         }
                     },
                     backgroundImage: {
@@ -38,6 +39,7 @@
                     animation: {
                         'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'float': 'float 6s ease-in-out infinite',
+                        'spin-slow': 'spin 12s linear infinite',
                     },
                     keyframes: {
                         float: {
@@ -146,6 +148,12 @@
             100% { clip-path: inset(58% 0 43% 0); }
         }
 
+        /* Sidebar Sticky */
+        .sidebar-sticky {
+            position: sticky;
+            top: 100px;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #020202; }
@@ -157,23 +165,33 @@
     <!-- Background Grid -->
     <div class="bg-grid bg-grid-pattern"></div>
     
-    <!-- Canvas for Matrix Rain (Optional Visuals) -->
+    <!-- Canvas for Matrix Rain -->
     <canvas id="matrixCanvas" class="fixed inset-0 z-0 opacity-[0.03] pointer-events-none"></canvas>
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 top-0 border-b border-white/5 bg-cyber-black/80 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <a href="../index.html" class="flex items-center gap-2 group">
+                <a href="#" class="flex items-center gap-2 group">
                     <span class="font-mono text-xl text-cyber-primary group-hover:text-white transition-colors tracking-tighter">
                         <span class="text-cyber-secondary">~</span>/tech/logs<span class="animate-pulse">_</span>
                     </span>
                 </a>
                 
-                <a href="../index.html" class="group flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded hover:border-cyber-primary hover:bg-cyber-primary/10 transition-all">
-                    <i class="fas fa-power-off text-xs text-gray-400 group-hover:text-cyber-primary transition-colors"></i>
-                    <span class="font-mono text-xs text-gray-400 group-hover:text-white uppercase tracking-widest">System Exit</span>
-                </a>
+                <div class="flex items-center gap-4">
+                     <!-- RSS Feed Link (Professional Touch) -->
+                     <a href="#" class="hidden sm:flex items-center gap-2 text-xs font-mono text-gray-500 hover:text-cyber-warning transition-colors uppercase tracking-wider">
+                        <i class="fas fa-rss"></i>
+                        <span>RSS_FEED.xml</span>
+                    </a>
+
+                    <div class="h-4 w-[1px] bg-white/10 hidden sm:block"></div>
+
+                    <a href="#" class="group flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded hover:border-cyber-primary hover:bg-cyber-primary/10 transition-all">
+                        <i class="fas fa-power-off text-xs text-gray-400 group-hover:text-cyber-primary transition-colors"></i>
+                        <span class="font-mono text-xs text-gray-400 group-hover:text-white uppercase tracking-widest">System Exit</span>
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
@@ -207,147 +225,277 @@
         </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main Content Grid -->
     <main class="flex-grow max-w-7xl mx-auto px-4 pb-24 w-full relative z-10">
         
-        <!-- Tech Tags -->
-        <div class="flex flex-wrap justify-center gap-3 mb-16 font-mono text-xs">
-            <button class="px-5 py-2 bg-cyber-primary text-black font-bold uppercase tracking-widest clip-path-slant hover:bg-white transition-colors">
-                [ All_Streams ]
-            </button>
-            <button class="px-5 py-2 bg-white/5 border border-white/10 text-gray-400 uppercase tracking-widest hover:border-cyber-secondary hover:text-cyber-secondary hover:bg-cyber-secondary/10 transition-all">
-                #Frontend
-            </button>
-            <button class="px-5 py-2 bg-white/5 border border-white/10 text-gray-400 uppercase tracking-widest hover:border-cyber-secondary hover:text-cyber-secondary hover:bg-cyber-secondary/10 transition-all">
-                #Backend
-            </button>
-            <button class="px-5 py-2 bg-white/5 border border-white/10 text-gray-400 uppercase tracking-widest hover:border-cyber-secondary hover:text-cyber-secondary hover:bg-cyber-secondary/10 transition-all">
-                #Artificial_Int
-            </button>
-        </div>
-
-        <!-- Blog Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="flex flex-col lg:flex-row gap-12">
             
-            <!-- Article 1 -->
-            <article class="tilt-card group cursor-pointer h-full flex flex-col rounded-sm relative" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
-                <!-- HUD Corners -->
-                <div class="hud-corner tl"></div>
-                <div class="hud-corner tr"></div>
-                <div class="hud-corner bl"></div>
-                <div class="hud-corner br"></div>
+            <!-- LEFT: Article Grid -->
+            <div class="w-full lg:w-3/4">
+                
+                <!-- Tech Tags -->
+                <div class="flex flex-wrap gap-3 mb-10 font-mono text-xs">
+                    <button class="px-5 py-2 bg-cyber-primary text-black font-bold uppercase tracking-widest clip-path-slant hover:bg-white transition-colors">
+                        [ All_Streams ]
+                    </button>
+                    <button class="px-5 py-2 bg-white/5 border border-white/10 text-gray-400 uppercase tracking-widest hover:border-cyber-secondary hover:text-cyber-secondary hover:bg-cyber-secondary/10 transition-all">
+                        #Frontend
+                    </button>
+                    <button class="px-5 py-2 bg-white/5 border border-white/10 text-gray-400 uppercase tracking-widest hover:border-cyber-secondary hover:text-cyber-secondary hover:bg-cyber-secondary/10 transition-all">
+                        #Backend
+                    </button>
+                    <button class="px-5 py-2 bg-white/5 border border-white/10 text-gray-400 uppercase tracking-widest hover:border-cyber-secondary hover:text-cyber-secondary hover:bg-cyber-secondary/10 transition-all">
+                        #Artificial_Int
+                    </button>
+                </div>
 
-                <div class="h-52 overflow-hidden relative border-b border-white/5">
-                    <div class="absolute inset-0 bg-cyber-primary/20 mix-blend-overlay z-10 opacity-50 group-hover:opacity-0 transition-opacity"></div>
-                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110">
-                    <div class="absolute top-4 left-4 z-20 px-2 py-1 bg-black/90 border border-cyber-primary text-cyber-primary font-mono text-[10px] tracking-wider">
-                        SYS.ARCH
-                    </div>
+                <!-- Articles Container -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    
+                    <!-- Article 1 -->
+                    <a href="#" class="block h-full group">
+                        <article class="tilt-card h-full flex flex-col rounded-sm relative" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                            <!-- HUD Corners -->
+                            <div class="hud-corner tl"></div>
+                            <div class="hud-corner tr"></div>
+                            <div class="hud-corner bl"></div>
+                            <div class="hud-corner br"></div>
+
+                            <div class="h-48 overflow-hidden relative border-b border-white/5">
+                                <div class="absolute inset-0 bg-cyber-primary/20 mix-blend-overlay z-10 opacity-50 group-hover:opacity-0 transition-opacity"></div>
+                                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110">
+                                <div class="absolute top-4 left-4 z-20 px-2 py-1 bg-black/90 border border-cyber-primary text-cyber-primary font-mono text-[10px] tracking-wider">
+                                    SYS.ARCH
+                                </div>
+                            </div>
+                            
+                            <div class="p-6 flex flex-col flex-grow tilt-content">
+                                <div class="font-mono text-[10px] text-gray-500 mb-4 flex justify-between items-center border-b border-white/5 pb-4">
+                                    <span class="text-cyber-primary">ID: 8842</span>
+                                    <div class="flex items-center gap-3">
+                                        <span>// 14.12.2024</span>
+                                        <span class="text-cyber-primary/70 flex items-center gap-1">
+                                            <i class="far fa-clock text-[9px]"></i> 8 min read
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <h2 class="text-xl font-bold font-display text-white mb-3 group-hover:text-cyber-primary transition-colors leading-tight">
+                                    Scaling Microservices: The gRPC Protocol
+                                </h2>
+                                
+                                <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow font-mono opacity-80">
+                                    Analyzing the shift from REST to binary protocols for high-throughput internal communication layers.
+                                </p>
+                                
+                                <div class="mt-auto pt-4 flex items-center justify-between text-xs font-mono uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
+                                    <span>Execute_Read()</span>
+                                    <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform text-cyber-primary"></i>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+
+                    <!-- Article 2 -->
+                    <a href="#" class="block h-full group">
+                        <article class="tilt-card h-full flex flex-col rounded-sm relative" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                            <div class="hud-corner tl"></div>
+                            <div class="hud-corner tr"></div>
+                            <div class="hud-corner bl"></div>
+                            <div class="hud-corner br"></div>
+
+                            <div class="h-48 overflow-hidden relative border-b border-white/5">
+                                <div class="absolute inset-0 bg-cyber-secondary/20 mix-blend-overlay z-10 opacity-50 group-hover:opacity-0 transition-opacity"></div>
+                                <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110">
+                                <div class="absolute top-4 left-4 z-20 px-2 py-1 bg-black/90 border border-cyber-secondary text-cyber-secondary font-mono text-[10px] tracking-wider">
+                                    AI.DATA
+                                </div>
+                            </div>
+                            
+                            <div class="p-6 flex flex-col flex-grow tilt-content">
+                                <div class="font-mono text-[10px] text-gray-500 mb-4 flex justify-between items-center border-b border-white/5 pb-4">
+                                    <span class="text-cyber-secondary">ID: 9921</span>
+                                    <div class="flex items-center gap-3">
+                                        <span>// 08.12.2024</span>
+                                        <span class="text-cyber-secondary/70 flex items-center gap-1">
+                                            <i class="far fa-clock text-[9px]"></i> 12 min read
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <h2 class="text-xl font-bold font-display text-white mb-3 group-hover:text-cyber-secondary transition-colors leading-tight">
+                                    RAG Pipelines with Vector Embeddings
+                                </h2>
+                                
+                                <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow font-mono opacity-80">
+                                    Implementing memory in LLMs using Pinecone and LangChain for context-aware responses.
+                                </p>
+                                
+                                <div class="mt-auto pt-4 flex items-center justify-between text-xs font-mono uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
+                                    <span>Execute_Read()</span>
+                                    <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform text-cyber-secondary"></i>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+
+                    <!-- Article 3 -->
+                    <a href="#" class="block h-full group">
+                        <article class="tilt-card h-full flex flex-col rounded-sm relative" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                            <div class="hud-corner tl"></div>
+                            <div class="hud-corner tr"></div>
+                            <div class="hud-corner bl"></div>
+                            <div class="hud-corner br"></div>
+
+                            <div class="h-48 overflow-hidden relative border-b border-white/5">
+                                <div class="absolute inset-0 bg-cyber-accent/20 mix-blend-overlay z-10 opacity-50 group-hover:opacity-0 transition-opacity"></div>
+                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110">
+                                <div class="absolute top-4 left-4 z-20 px-2 py-1 bg-black/90 border border-cyber-accent text-cyber-accent font-mono text-[10px] tracking-wider">
+                                    REACT.INT
+                                </div>
+                            </div>
+                            
+                            <div class="p-6 flex flex-col flex-grow tilt-content">
+                                <div class="font-mono text-[10px] text-gray-500 mb-4 flex justify-between items-center border-b border-white/5 pb-4">
+                                    <span class="text-cyber-accent">ID: 7734</span>
+                                    <div class="flex items-center gap-3">
+                                        <span>// 20.11.2024</span>
+                                        <span class="text-cyber-accent/70 flex items-center gap-1">
+                                            <i class="far fa-clock text-[9px]"></i> 6 min read
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <h2 class="text-xl font-bold font-display text-white mb-3 group-hover:text-cyber-accent transition-colors leading-tight">
+                                    Next.js 14: Server Actions Deep Dive
+                                </h2>
+                                
+                                <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow font-mono opacity-80">
+                                    Eliminating API routes and handling mutations directly from server components securely.
+                                </p>
+                                
+                                <div class="mt-auto pt-4 flex items-center justify-between text-xs font-mono uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
+                                    <span>Execute_Read()</span>
+                                    <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform text-cyber-accent"></i>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                    
+                     <!-- Article 4 (New Placeholder) -->
+                     <a href="#" class="block h-full group">
+                        <article class="tilt-card h-full flex flex-col rounded-sm relative" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                            <div class="hud-corner tl"></div>
+                            <div class="hud-corner tr"></div>
+                            <div class="hud-corner bl"></div>
+                            <div class="hud-corner br"></div>
+
+                            <div class="h-48 overflow-hidden relative border-b border-white/5 flex items-center justify-center bg-white/5">
+                               <div class="text-center">
+                                   <i class="fas fa-lock text-2xl text-gray-600 mb-2"></i>
+                                   <div class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Encrypted</div>
+                               </div>
+                            </div>
+                            
+                            <div class="p-6 flex flex-col flex-grow tilt-content opacity-50">
+                                <div class="font-mono text-[10px] text-gray-500 mb-4 flex justify-between items-center border-b border-white/5 pb-4">
+                                    <span>ID: ????</span>
+                                    <span>// --.--.----</span>
+                                </div>
+                                
+                                <h2 class="text-xl font-bold font-display text-gray-500 mb-3 leading-tight">
+                                    [Redacted Protocol]
+                                </h2>
+                                
+                                <p class="text-gray-600 text-sm leading-relaxed mb-6 flex-grow font-mono">
+                                    Data stream unavailable. Access level requires upgrade.
+                                </p>
+                            </div>
+                        </article>
+                    </a>
+
                 </div>
                 
-                <div class="p-8 flex flex-col flex-grow tilt-content">
-                    <div class="font-mono text-[10px] text-gray-500 mb-4 flex justify-between items-center border-b border-white/5 pb-4">
-                        <span class="text-cyber-primary">ID: 8842</span>
-                        <span>// 14.12.2024</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-bold font-display text-white mb-4 group-hover:text-cyber-primary transition-colors leading-tight">
-                        Scaling Microservices: The gRPC Protocol
-                    </h2>
-                    
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow font-mono opacity-80">
-                        Analyzing the shift from REST to binary protocols for high-throughput internal communication layers.
-                    </p>
-                    
-                    <div class="mt-auto pt-4 flex items-center justify-between text-xs font-mono uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
-                        <span>Execute_Read()</span>
-                        <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform text-cyber-primary"></i>
-                    </div>
+                <!-- Load More -->
+                <div class="mt-12 text-center">
+                    <button class="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-mono font-bold text-white transition-all duration-300 bg-transparent border border-white/20 rounded-sm hover:bg-white/5 hover:border-cyber-primary hover:shadow-[0_0_20px_rgba(0,243,255,0.3)]">
+                        <span class="mr-2 uppercase tracking-widest text-xs">Load_More_Data</span>
+                        <i class="fas fa-sync-alt group-hover:rotate-180 transition-transform duration-700 text-cyber-primary"></i>
+                    </button>
                 </div>
-            </article>
+            </div>
 
-            <!-- Article 2 -->
-            <article class="tilt-card group cursor-pointer h-full flex flex-col rounded-sm relative" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
-                <div class="hud-corner tl"></div>
-                <div class="hud-corner tr"></div>
-                <div class="hud-corner bl"></div>
-                <div class="hud-corner br"></div>
-
-                <div class="h-52 overflow-hidden relative border-b border-white/5">
-                    <div class="absolute inset-0 bg-cyber-secondary/20 mix-blend-overlay z-10 opacity-50 group-hover:opacity-0 transition-opacity"></div>
-                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110">
-                    <div class="absolute top-4 left-4 z-20 px-2 py-1 bg-black/90 border border-cyber-secondary text-cyber-secondary font-mono text-[10px] tracking-wider">
-                        AI.DATA
-                    </div>
-                </div>
+            <!-- RIGHT: Sidebar / TOC -->
+            <aside class="w-full lg:w-1/4 hidden lg:block space-y-8">
                 
-                <div class="p-8 flex flex-col flex-grow tilt-content">
-                    <div class="font-mono text-[10px] text-gray-500 mb-4 flex justify-between items-center border-b border-white/5 pb-4">
-                        <span class="text-cyber-secondary">ID: 9921</span>
-                        <span>// 08.12.2024</span>
-                    </div>
+                <!-- TOC Widget -->
+                <div class="sticky top-28 space-y-8">
                     
-                    <h2 class="text-xl font-bold font-display text-white mb-4 group-hover:text-cyber-secondary transition-colors leading-tight">
-                        RAG Pipelines with Vector Embeddings
-                    </h2>
-                    
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow font-mono opacity-80">
-                        Implementing memory in LLMs using Pinecone and LangChain for context-aware responses.
-                    </p>
-                    
-                    <div class="mt-auto pt-4 flex items-center justify-between text-xs font-mono uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
-                        <span>Execute_Read()</span>
-                        <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform text-cyber-secondary"></i>
-                    </div>
-                </div>
-            </article>
+                    <!-- Directory Panel -->
+                    <div class="bg-cyber-black/50 border border-white/10 p-6 backdrop-blur-sm relative">
+                        <!-- Decorative Lines -->
+                        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/30"></div>
+                        <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/30"></div>
+                        <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-white/30"></div>
+                        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/30"></div>
 
-            <!-- Article 3 -->
-            <article class="tilt-card group cursor-pointer h-full flex flex-col rounded-sm relative" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
-                <div class="hud-corner tl"></div>
-                <div class="hud-corner tr"></div>
-                <div class="hud-corner bl"></div>
-                <div class="hud-corner br"></div>
+                        <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-6 flex items-center gap-2">
+                            <i class="fas fa-list-ul text-cyber-primary"></i>
+                            System_Directory
+                        </h3>
 
-                <div class="h-52 overflow-hidden relative border-b border-white/5">
-                    <div class="absolute inset-0 bg-cyber-accent/20 mix-blend-overlay z-10 opacity-50 group-hover:opacity-0 transition-opacity"></div>
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110">
-                    <div class="absolute top-4 left-4 z-20 px-2 py-1 bg-black/90 border border-cyber-accent text-cyber-accent font-mono text-[10px] tracking-wider">
-                        REACT.INT
+                        <ul class="space-y-4 font-mono text-xs">
+                            <li class="group">
+                                <a href="#" class="flex items-start gap-3 text-gray-400 group-hover:text-white transition-colors">
+                                    <span class="text-cyber-primary mt-1">01.</span>
+                                    <span class="leading-relaxed border-b border-transparent group-hover:border-cyber-primary/50 transition-colors">Microservices & gRPC Protocol</span>
+                                </a>
+                            </li>
+                            <li class="group">
+                                <a href="#" class="flex items-start gap-3 text-gray-400 group-hover:text-white transition-colors">
+                                    <span class="text-cyber-secondary mt-1">02.</span>
+                                    <span class="leading-relaxed border-b border-transparent group-hover:border-cyber-secondary/50 transition-colors">RAG AI Implementation</span>
+                                </a>
+                            </li>
+                            <li class="group">
+                                <a href="#" class="flex items-start gap-3 text-gray-400 group-hover:text-white transition-colors">
+                                    <span class="text-cyber-accent mt-1">03.</span>
+                                    <span class="leading-relaxed border-b border-transparent group-hover:border-cyber-accent/50 transition-colors">Next.js Server Actions</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
+
+                    <!-- RSS / Subscribe Panel -->
+                    <div class="border border-white/10 p-6 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-cyber-warning/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                        
+                        <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4 flex items-center gap-2 relative z-10">
+                            <i class="fas fa-satellite-dish text-cyber-warning"></i>
+                            Data_Stream
+                        </h3>
+                        
+                        <p class="text-gray-500 text-xs font-mono mb-4 leading-relaxed relative z-10">
+                            Subscribe to the neural feed for instant protocol updates.
+                        </p>
+
+                        <button class="w-full py-2 bg-white/5 border border-white/10 text-cyber-warning font-mono text-xs uppercase tracking-widest hover:bg-cyber-warning hover:text-black transition-all relative z-10">
+                            RSS_SUBSCRIBE [XML]
+                        </button>
+                    </div>
+
+                    <!-- Mini Matrix Effect Box -->
+                    <div class="h-32 border border-white/5 relative overflow-hidden bg-black">
+                        <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(0deg, transparent 24%, rgba(0, 255, 65, .3) 25%, rgba(0, 255, 65, .3) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, .3) 75%, rgba(0, 255, 65, .3) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 255, 65, .3) 25%, rgba(0, 255, 65, .3) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, .3) 75%, rgba(0, 255, 65, .3) 76%, transparent 77%, transparent); background-size: 30px 30px;"></div>
+                        <div class="absolute inset-0 flex items-center justify-center font-mono text-[10px] text-cyber-green animate-pulse">
+                            MONITORING_TRAFFIC...
+                        </div>
+                    </div>
+
                 </div>
-                
-                <div class="p-8 flex flex-col flex-grow tilt-content">
-                    <div class="font-mono text-[10px] text-gray-500 mb-4 flex justify-between items-center border-b border-white/5 pb-4">
-                        <span class="text-cyber-accent">ID: 7734</span>
-                        <span>// 20.11.2024</span>
-                    </div>
-                    
-                    <h2 class="text-xl font-bold font-display text-white mb-4 group-hover:text-cyber-accent transition-colors leading-tight">
-                        Next.js 14: Server Actions Deep Dive
-                    </h2>
-                    
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow font-mono opacity-80">
-                        Eliminating API routes and handling mutations directly from server components securely.
-                    </p>
-                    
-                    <div class="mt-auto pt-4 flex items-center justify-between text-xs font-mono uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors">
-                        <span>Execute_Read()</span>
-                        <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition-transform text-cyber-accent"></i>
-                    </div>
-                </div>
-            </article>
+            </aside>
 
         </div>
-        
-        <!-- Load More -->
-        <div class="mt-20 text-center">
-            <button class="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-mono font-bold text-white transition-all duration-300 bg-transparent border border-white/20 rounded-sm hover:bg-white/5 hover:border-cyber-primary hover:shadow-[0_0_20px_rgba(0,243,255,0.3)]">
-                <span class="mr-2 uppercase tracking-widest text-xs">Load_More_Data</span>
-                <i class="fas fa-sync-alt group-hover:rotate-180 transition-transform duration-700 text-cyber-primary"></i>
-            </button>
-        </div>
-
     </main>
 
     <!-- Footer -->
