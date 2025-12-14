@@ -1,116 +1,336 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Pipelines | Neural Logs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'monospace'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        cyber: {
+                            black: '#020202', 
+                            dark: '#080808',
+                            primary: '#00f3ff', // Cyan
+                            secondary: '#9d00ff', // Purple
+                            accent: '#ff003c', // Red/Pink
+                            green: '#00ff41', // Matrix Green
+                            warning: '#fcee0a', // Cyber Yellow
+                            text: '#c0c0c0',
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)",
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #020202;
+            color: #c0c0c0;
+            cursor: crosshair;
+        }
 
-<title>RAG Pipelines with Vector Embeddings | Harsh Parashar</title>
-<meta name="description" content="A practical guide to building Retrieval-Augmented Generation pipelines using vector databases and embeddings.">
+        /* Animated Background Grid */
+        .bg-grid {
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+            opacity: 0.1;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            animation: gridMove 20s linear infinite;
+        }
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
 
-<style>
-body { background:#020202; color:#e5e5e5; }
-</style>
+        /* Typography Override */
+        h1, h2, h3, h4 { color: #ffffff; font-family: 'Space Grotesk', sans-serif; }
+        strong { color: #9d00ff; } /* Secondary Color for this post */
+        
+        /* Code Blocks */
+        pre {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(157, 0, 255, 0.3); /* Purple border */
+            backdrop-filter: blur(5px);
+            border-radius: 4px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #e5e5e5;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020202; }
+        ::-webkit-scrollbar-thumb { background: #9d00ff; border-radius: 3px; }
+    </style>
 </head>
+<body class="antialiased min-h-screen flex flex-col">
 
-<body class="font-mono">
+    <!-- Background Grid -->
+    <div class="bg-grid bg-grid-pattern"></div>
+    <canvas id="matrixCanvas" class="fixed inset-0 z-0 opacity-[0.03] pointer-events-none"></canvas>
 
-<article class="max-w-3xl mx-auto px-4 py-24">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 border-b border-white/5 bg-cyber-black/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Back to Home -->
+                <a href="../index.html" class="flex items-center gap-2 group">
+                    <i class="fas fa-chevron-left text-cyber-secondary text-xs group-hover:-translate-x-1 transition-transform"></i>
+                    <span class="font-mono text-xl text-cyber-secondary group-hover:text-white transition-colors tracking-tighter">
+                        <span class="text-cyber-primary">~</span>/tech/logs<span class="animate-pulse">_</span>
+                    </span>
+                </a>
+                
+                <div class="flex items-center gap-4">
+                    <div class="hidden sm:flex items-center gap-2 text-xs font-mono text-gray-500">
+                        <span class="w-2 h-2 rounded-full bg-cyber-secondary animate-pulse"></span>
+                        READING_MODE: ACTIVE
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-<a href="/tech/blog/" class="text-purple-400 text-xs tracking-widest">
-← ALL LOGS
-</a>
+    <!-- Content Wrapper -->
+    <main class="flex-grow pt-32 pb-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4">
+            
+            <div class="flex flex-col lg:flex-row gap-16">
+                
+                <!-- LEFT: Main Article -->
+                <article class="w-full lg:w-3/4 space-y-8">
+                    
+                    <!-- Header -->
+                    <header class="border-b border-white/10 pb-8">
+                        <div class="flex gap-4 font-mono text-xs text-cyber-secondary mb-4">
+                            <span class="bg-cyber-secondary/10 px-2 py-1 rounded border border-cyber-secondary/20">AI.DATA</span>
+                            <span class="bg-white/5 px-2 py-1 rounded border border-white/10 text-gray-400">#LLM</span>
+                            <span class="bg-white/5 px-2 py-1 rounded border border-white/10 text-gray-400">#VectorDB</span>
+                        </div>
+                        
+                        <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                            RAG Pipelines with <span class="text-cyber-secondary">Vector Embeddings</span>
+                        </h1>
+                        
+                        <div class="flex items-center gap-6 font-mono text-xs text-gray-500">
+                            <div class="flex items-center gap-2">
+                                <i class="far fa-calendar"></i>
+                                <span>08.12.2024</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="far fa-clock"></i>
+                                <span>12 min read</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="far fa-user"></i>
+                                <span>Harsh Parashar</span>
+                            </div>
+                        </div>
+                    </header>
 
-<h1 class="text-4xl md:text-5xl font-bold mt-6 mb-6 font-['Space_Grotesk']">
-Building RAG Pipelines with Vector Embeddings
-</h1>
+                    <!-- Body Content -->
+                    <div class="prose prose-invert prose-lg max-w-none font-sans text-gray-300">
+                        
+                        <p class="lead text-xl text-gray-400 font-light border-l-4 border-cyber-primary pl-6 italic">
+                            Large Language Models hallucinate. They don't know about your private data. Retrieval-Augmented Generation (RAG) solves this by injecting relevant context directly into the prompt window.
+                        </p>
 
-<p class="text-gray-400 text-sm mb-10">
-Published · 08 December 2024 · AI Engineering
-</p>
+                        <h2 id="concept" class="text-2xl font-bold mt-12 mb-6 text-white flex items-center gap-3">
+                            <span class="text-cyber-secondary font-mono text-lg">01.</span> The Context Window Problem
+                        </h2>
+                        
+                        <p>
+                            Even with GPT-4's 128k token window, you cannot fit an entire corporate knowledge base into a single prompt. It's expensive and slow. We need a way to search for <strong>semantically relevant</strong> snippets of text and only send those to the LLM.
+                        </p>
 
-<section class="space-y-6 text-gray-300 leading-relaxed">
+                        <!-- Visual Block -->
+                        <div class="my-8 relative group">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-cyber-secondary to-cyber-primary opacity-20 blur rounded-lg group-hover:opacity-40 transition duration-500"></div>
+                            <div class="relative bg-black/80 border border-white/10 p-6 rounded-lg font-mono text-sm flex flex-col gap-4">
+                                <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                                    <span class="text-gray-500">Traditional Search (Keyword)</span>
+                                    <span class="text-red-400">"apple" != "fruit"</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-500">Vector Search (Semantic)</span>
+                                    <span class="text-cyber-green">"apple" ≈ "fruit" (0.89 similarity)</span>
+                                </div>
+                            </div>
+                        </div>
 
-<p>
-Large Language Models are powerful, but fundamentally limited. They do not remember
-your data, your documents, or your business context.
-</p>
+                        <h2 id="embeddings" class="text-2xl font-bold mt-12 mb-6 text-white flex items-center gap-3">
+                            <span class="text-cyber-primary font-mono text-lg">02.</span> Creating Embeddings
+                        </h2>
 
-<p>
-This is where <strong>Retrieval-Augmented Generation (RAG)</strong> becomes essential.
-Instead of forcing models to hallucinate, we retrieve relevant knowledge and inject it
-directly into the prompt.
-</p>
+                        <p>
+                            We use models like OpenAI's `text-embedding-3-small` to convert text chunks into high-dimensional vectors (arrays of floats).
+                        </p>
 
-<h2 class="text-2xl text-purple-400 mt-10">The Core Problem</h2>
+<pre><code class="language-python">import openai
+from pinecone import Pinecone
 
-<p>
-LLMs are static at inference time. Even fine-tuned models lack awareness of:
-</p>
+# 1. Generate Embedding
+def get_embedding(text):
+    response = openai.embeddings.create(
+        input=text,
+        model="text-embedding-3-small"
+    )
+    return response.data[0].embedding
 
-<ul class="list-disc list-inside">
-  <li>Private documents</li>
-  <li>Frequently changing data</li>
-  <li>Domain-specific knowledge</li>
-</ul>
+# 2. Vector: [-0.002, 0.054, -0.012, ... 1536 dims]
+vector = get_embedding("How do I reset my password?")</code></pre>
 
-<p>
-RAG solves this by separating <em>knowledge storage</em> from <em>language reasoning</em>.
-</p>
+                        <h2 id="retrieval" class="text-2xl font-bold mt-12 mb-6 text-white flex items-center gap-3">
+                            <span class="text-cyber-accent font-mono text-lg">03.</span> The Retrieval Loop
+                        </h2>
 
-<h2 class="text-2xl text-purple-400 mt-10">How Vector Embeddings Enable Retrieval</h2>
+                        <p>
+                            Once data is indexed in a Vector DB (like Pinecone or Milvus), the runtime flow looks like this:
+                        </p>
+                        
+                        <ol class="list-decimal list-inside space-y-3 mt-4 ml-2 marker:text-cyber-secondary">
+                            <li>User asks a question.</li>
+                            <li>Convert question to Vector query.</li>
+                            <li>Perform Cosine Similarity search in DB.</li>
+                            <li>Retrieve top 3 matching chunks.</li>
+                            <li>Construct prompt: <code>"Answer using this context: {chunks}"</code>.</li>
+                        </ol>
 
-<p>
-Instead of keyword matching, RAG relies on semantic similarity.
-Text is converted into dense vectors using embedding models.
-</p>
+                        <h2 id="conclusion" class="text-2xl font-bold mt-12 mb-6 text-white flex items-center gap-3">
+                            <span class="text-cyber-warning font-mono text-lg">04.</span> Summary
+                        </h2>
 
-<pre class="bg-black border border-white/10 p-4 text-sm overflow-x-auto">
-"User authentication flow" → [0.021, -0.332, 0.812, ...]
-</pre>
+                        <p>
+                            RAG bridges the gap between static LLM knowledge and dynamic, private data. It is the cornerstone of building "Chat with your PDF" apps or enterprise support bots.
+                        </p>
 
-<p>
-These vectors are stored in a vector database such as Pinecone, Weaviate, or FAISS.
-At query time, the nearest vectors are retrieved using cosine similarity.
-</p>
+                    </div>
 
-<h2 class="text-2xl text-purple-400 mt-10">A Practical RAG Architecture</h2>
+                </article>
 
-<ul class="list-decimal list-inside">
-  <li>Chunk documents into semantically meaningful blocks</li>
-  <li>Generate embeddings for each chunk</li>
-  <li>Store vectors with metadata</li>
-  <li>Embed user query</li>
-  <li>Retrieve top-K similar chunks</li>
-  <li>Inject into LLM prompt</li>
-</ul>
+                <!-- RIGHT: Sidebar (Sticky) -->
+                <aside class="w-full lg:w-1/4 hidden lg:block">
+                    <div class="sticky top-28 space-y-8">
+                        
+                        <!-- Table of Contents -->
+                        <div class="bg-white/5 border border-white/10 p-6 rounded-sm backdrop-blur-md">
+                            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-6 flex items-center gap-2">
+                                <i class="fas fa-layer-group text-cyber-secondary"></i>
+                                Buffer_Content
+                            </h3>
+                            <nav class="space-y-4 font-mono text-xs">
+                                <a href="#concept" class="block text-gray-400 hover:text-white hover:translate-x-1 transition-all">
+                                    01. Context Window Problem
+                                </a>
+                                <a href="#embeddings" class="block text-gray-400 hover:text-white hover:translate-x-1 transition-all">
+                                    02. Creating Embeddings
+                                </a>
+                                <a href="#retrieval" class="block text-gray-400 hover:text-white hover:translate-x-1 transition-all">
+                                    03. The Retrieval Loop
+                                </a>
+                                <a href="#conclusion" class="block text-gray-400 hover:text-white hover:translate-x-1 transition-all">
+                                    04. Summary
+                                </a>
+                            </nav>
+                        </div>
 
-<h2 class="text-2xl text-purple-400 mt-10">Why This Scales Better Than Fine-Tuning</h2>
+                        <!-- Related Logs -->
+                        <div class="border-l border-white/10 pl-6 py-2">
+                            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">
+                                Related_Uplinks
+                            </h3>
+                            <div class="space-y-4">
+                                <a href="scaling-microservices-grpc.html" class="block group">
+                                    <div class="text-cyber-primary text-xs mb-1 group-hover:text-white transition-colors">SYS.ARCH</div>
+                                    <div class="text-sm font-display text-gray-300 group-hover:text-cyber-primary transition-colors">
+                                        Scaling Microservices with gRPC
+                                    </div>
+                                </a>
+                                <a href="#" class="block group">
+                                    <div class="text-cyber-accent text-xs mb-1 group-hover:text-white transition-colors">REACT.INT</div>
+                                    <div class="text-sm font-display text-gray-300 group-hover:text-cyber-accent transition-colors">
+                                        Next.js 14 Server Actions
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
 
-<p>
-Fine-tuning is expensive, slow, and brittle.
-RAG allows:
-</p>
+                    </div>
+                </aside>
 
-<ul class="list-disc list-inside">
-  <li>Instant updates</li>
-  <li>Lower inference cost</li>
-  <li>Clear data boundaries</li>
-</ul>
+            </div>
+        </div>
+    </main>
 
-<p>
-In production systems, RAG is not optional—it is the default architecture.
-</p>
+    <!-- Footer -->
+    <footer class="border-t border-white/5 bg-black py-12 relative z-10 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-cyber-green rounded-full animate-pulse"></div>
+                <span class="font-mono text-xs text-gray-600">SYSTEM HEALTH: 100%</span>
+            </div>
+            
+            <a href="#" class="font-mono text-xs text-gray-500 hover:text-cyber-secondary transition-colors">
+                <i class="fas fa-arrow-up mr-2"></i>RETURN_TO_TOP
+            </a>
+        </div>
+    </footer>
 
-</section>
+    <!-- Matrix Script -->
+    <script>
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+        const cols = Math.floor(width / 20) + 1;
+        const ypos = Array(cols).fill(0);
 
-</article>
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
 
-<footer class="border-t border-white/10 py-6 text-center text-xs text-gray-600">
-© Harsh Parashar
-</footer>
-
+        function matrix() {
+            ctx.fillStyle = '#0001';
+            ctx.fillRect(0, 0, width, height);
+            ctx.fillStyle = '#9d00ff'; /* Purple for this page */
+            ctx.font = '10pt monospace';
+            ypos.forEach((y, ind) => {
+                const text = String.fromCharCode(Math.random() * 128);
+                const x = ind * 20;
+                ctx.fillText(text, x, y);
+                if (y > 100 + Math.random() * 10000) ypos[ind] = 0;
+                else ypos[ind] = y + 20;
+            });
+        }
+        setInterval(matrix, 50);
+    </script>
 </body>
 </html>
