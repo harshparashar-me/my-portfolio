@@ -5,14 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Harsh Parashar | DevOps Beginner</title>
-  <meta name="description" content="DevOps beginner portfolio – Linux, cloud fundamentals, and automation learning journey." />
+  <meta name="description" content="DevOps beginner portfolio focused on Linux, cloud fundamentals, and automation learning." />
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-
   <script>
     tailwind.config = {
       theme: {
@@ -22,9 +21,7 @@
             mono: ['JetBrains Mono', 'monospace']
           },
           colors: {
-            slate: {
-              950: '#020617'
-            }
+            slate: { 950: '#020617' }
           }
         }
       }
@@ -38,7 +35,7 @@
 <body class="bg-slate-950 text-slate-300 font-sans antialiased">
 
 <!-- NAV -->
-<nav class="fixed w-full top-0 z-50 bg-slate-950/90 backdrop-blur border-b border-slate-800">
+<nav class="fixed top-0 w-full z-50 bg-slate-950/90 backdrop-blur border-b border-slate-800">
   <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
     <span class="font-mono text-lg font-bold text-slate-100">
       harsh<span class="text-slate-500">.devops</span>
@@ -52,45 +49,48 @@
   </div>
 </nav>
 
-<main class="max-w-6xl mx-auto px-6 pt-32 pb-24 space-y-28">
+<main class="max-w-6xl mx-auto px-6 pt-32 pb-28 space-y-32">
 
 <!-- HERO -->
-<section class="grid lg:grid-cols-2 gap-12 items-center">
-  <div class="space-y-6">
-    <span class="inline-block px-3 py-1 text-xs font-mono rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+<section class="grid lg:grid-cols-2 gap-14 items-center">
+  <div class="space-y-7">
+    <span class="inline-flex items-center gap-2 px-3 py-1 text-xs font-mono rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
       Open to DevOps Internships
     </span>
 
-    <h1 class="text-4xl font-bold text-slate-100">
+    <h1 class="text-4xl lg:text-5xl font-bold text-slate-100 leading-tight">
       DevOps Beginner <br />
       <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">
         Building Reliable Foundations
       </span>
     </h1>
 
-    <p class="text-slate-400 max-w-lg">
-      Hi, I’m Harsh Parashar — a BCA (Cloud Computing) student learning DevOps fundamentals.
-      I focus on Linux, Git, and cloud concepts with a strong emphasis on understanding systems from the ground up.
+    <p class="text-slate-400 max-w-xl leading-relaxed">
+      I’m Harsh Parashar — a BCA (Cloud Computing) student learning DevOps from first principles.
+      My focus is on Linux, Git, and cloud fundamentals, with an emphasis on understanding systems deeply before automating them.
     </p>
 
-    <div class="flex gap-4">
-      <a href="#labs" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded">
+    <div class="flex flex-wrap gap-4">
+      <a href="#labs" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded transition">
         View Learning Labs
       </a>
-      <a href="#contact" class="px-6 py-3 border border-slate-700 rounded hover:bg-slate-800">
+      <a href="#contact" class="px-6 py-3 border border-slate-700 rounded hover:bg-slate-800 transition">
         Contact Me
       </a>
     </div>
   </div>
 
   <!-- TERMINAL -->
-  <div class="bg-slate-900 border border-slate-700 rounded-lg font-mono text-sm overflow-hidden">
-    <div class="bg-slate-800 px-4 py-2 text-xs text-slate-400">harsh@portfolio:~</div>
+  <div class="bg-slate-900 border border-slate-700 rounded-xl font-mono text-sm overflow-hidden shadow-xl">
+    <div class="bg-slate-800 px-4 py-2 text-xs text-slate-400">
+      harsh@portfolio:~
+    </div>
     <div class="p-6 space-y-4">
       <div><span class="text-emerald-400">$</span> whoami</div>
-      <div class="pl-4">
+      <div class="pl-4 text-slate-200">
         Harsh Parashar<br />
-        BCA (Cloud Computing) | DevOps Beginner
+        <span class="text-slate-400">BCA (Cloud Computing) | DevOps Beginner</span>
       </div>
       <div><span class="text-emerald-400">$</span> cat goal.txt</div>
       <div class="pl-4 text-emerald-300">
@@ -104,22 +104,22 @@
 <section id="about" class="max-w-3xl">
   <h2 class="text-2xl font-bold text-slate-100 mb-4">About Me</h2>
   <p class="text-slate-400 leading-relaxed">
-    I am currently in the learning phase of DevOps, focusing on understanding how systems,
-    servers, and cloud infrastructure actually work. I believe in learning slowly, documenting
-    clearly, and avoiding shortcuts. My goal is to become reliable before becoming fast.
+    I am in the early stage of my DevOps journey and intentionally focusing on core fundamentals.
+    Instead of rushing tools, I prioritize understanding Linux systems, networking basics,
+    and how cloud infrastructure actually works. I document what I learn and improve incrementally.
   </p>
 </section>
 
 <!-- SKILLS -->
 <section id="skills">
-  <h2 class="text-2xl font-bold text-slate-100 mb-6">Currently Learning</h2>
-  <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 text-slate-400">
-    <div>Linux fundamentals (Ubuntu)</div>
-    <div>Git & GitHub workflows</div>
-    <div>Cloud computing concepts</div>
-    <div>Basic networking (DNS, ports)</div>
-    <div>Bash & Python basics</div>
-    <div>DevOps principles</div>
+  <h2 class="text-2xl font-bold text-slate-100 mb-6">Current Learning Stack</h2>
+  <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <div class="p-4 border border-slate-800 rounded bg-slate-900">Linux fundamentals (Ubuntu)</div>
+    <div class="p-4 border border-slate-800 rounded bg-slate-900">Git & GitHub workflows</div>
+    <div class="p-4 border border-slate-800 rounded bg-slate-900">Cloud computing concepts</div>
+    <div class="p-4 border border-slate-800 rounded bg-slate-900">Basic networking (DNS, ports)</div>
+    <div class="p-4 border border-slate-800 rounded bg-slate-900">Bash & Python basics</div>
+    <div class="p-4 border border-slate-800 rounded bg-slate-900">DevOps principles</div>
   </div>
 </section>
 
@@ -128,44 +128,42 @@
   <h2 class="text-2xl font-bold text-slate-100 mb-6">Practice Labs (Learning)</h2>
 
   <div class="grid md:grid-cols-2 gap-6">
-
-    <div class="border border-slate-700 rounded-lg p-6 bg-slate-900">
+    <div class="p-6 border border-slate-800 rounded-xl bg-slate-900 hover:border-emerald-500/40 transition">
       <h3 class="text-lg font-semibold text-slate-100 mb-2">
         Linux Command Line Practice
       </h3>
-      <p class="text-slate-400 text-sm">
-        Practicing Linux commands, file system navigation, permissions, and basic process management
-        using Ubuntu-based environments.
+      <p class="text-slate-400 text-sm leading-relaxed">
+        Hands-on practice with Linux commands, permissions, directory structures,
+        and basic process management using Ubuntu environments.
       </p>
-      <p class="mt-3 text-xs text-emerald-400 font-mono">Linux · CLI · Fundamentals</p>
+      <p class="mt-3 text-xs font-mono text-emerald-400">Linux · CLI · Fundamentals</p>
     </div>
 
-    <div class="border border-slate-700 rounded-lg p-6 bg-slate-900">
+    <div class="p-6 border border-slate-800 rounded-xl bg-slate-900 hover:border-emerald-500/40 transition">
       <h3 class="text-lg font-semibold text-slate-100 mb-2">
         Git & Version Control Practice
       </h3>
-      <p class="text-slate-400 text-sm">
-        Learning Git concepts such as repositories, commits, branches, and remote workflows
-        through guided exercises and documentation.
+      <p class="text-slate-400 text-sm leading-relaxed">
+        Practicing Git workflows including commits, branches, and remote repositories
+        through guided labs and consistent documentation.
       </p>
-      <p class="mt-3 text-xs text-emerald-400 font-mono">Git · GitHub · Version Control</p>
+      <p class="mt-3 text-xs font-mono text-emerald-400">Git · GitHub · Version Control</p>
     </div>
-
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact" class="text-center">
-  <h2 class="text-2xl font-bold text-slate-100 mb-4">Contact</h2>
-  <p class="text-slate-400 mb-6">
-    I am actively seeking beginner-friendly DevOps or cloud internships.
+  <h2 class="text-2xl font-bold text-slate-100 mb-4">Let’s Connect</h2>
+  <p class="text-slate-400 mb-8 max-w-xl mx-auto">
+    I’m actively seeking beginner-friendly DevOps or cloud internships where I can learn from real systems and experienced engineers.
   </p>
 
   <div class="flex flex-col sm:flex-row justify-center gap-4">
-    <a href="mailto:contact@harshparashar.me" class="px-6 py-3 bg-emerald-600 text-white rounded hover:bg-emerald-500">
+    <a href="mailto:contact@harshparashar.me" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded transition">
       Email Me
     </a>
-    <a href="https://github.com/harshparashar-me" class="px-6 py-3 border border-slate-700 rounded hover:bg-slate-800">
+    <a href="https://github.com/harshparashar-me" class="px-6 py-3 border border-slate-700 rounded hover:bg-slate-800 transition">
       GitHub
     </a>
   </div>
