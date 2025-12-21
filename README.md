@@ -66,7 +66,7 @@ All content is created as part of my skill-building journey.
 ## 📫 Connect With Me
 
 - GitHub: https://github.com/harshparashar-me  
-- Portfolio: https://harshparashar.me/tech/  
+- Portfolio: https://harshparashar.me/  
 - Email: contact@harshparashar.me  
 
 ---
