@@ -1,183 +1,391 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harsh Parashar | DevOps Beginner</title>
+    <meta name="description" content="Harsh Parashar - BCA student and DevOps beginner focused on Linux, Git, and Cloud fundamentals.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <title>Harsh Parashar | DevOps Beginner</title>
-  <meta name="description" content="DevOps beginner portfolio focused on Linux, cloud fundamentals, and automation learning." />
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
-          },
-          colors: {
-            slate: { 950: '#020617' }
-          }
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: { 950: '#020617' }
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
+    </script>
 
-  <!-- Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        .selection-emerald::selection { background-color: rgba(16, 185, 129, 0.3); }
+        .glass-nav { background-color: rgba(2, 6, 23, 0.8); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(30, 41, 59, 1); }
+        .terminal-shadow { box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.1); }
+    </style>
 </head>
+<body class="bg-slate-950 text-slate-300 font-sans antialiased selection-emerald">
 
-<body class="bg-slate-950 text-slate-300 font-sans antialiased">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 py-5">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-2 font-mono text-lg font-bold">
+                <span class="text-slate-100">harsh<span class="text-emerald-500">.devops</span></span>
+            </div>
 
-<!-- NAV -->
-<nav class="fixed top-0 w-full z-50 bg-slate-950/90 backdrop-blur border-b border-slate-800">
-  <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-    <span class="font-mono text-lg font-bold text-slate-100">
-      harsh<span class="text-slate-500">.devops</span>
-    </span>
-    <div class="hidden md:flex gap-6 text-sm">
-      <a href="#about" class="hover:text-emerald-400">About</a>
-      <a href="#skills" class="hover:text-emerald-400">Stack</a>
-      <a href="#labs" class="hover:text-emerald-400">Labs</a>
-      <a href="#contact" class="hover:text-emerald-400">Contact</a>
-    </div>
-  </div>
-</nav>
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex gap-8 items-center text-xs font-medium uppercase tracking-widest">
+                <a href="#about" class="hover:text-emerald-400 transition-colors">About</a>
+                <a href="#skills" class="hover:text-emerald-400 transition-colors">Learning Stack</a>
+                <a href="#labs" class="hover:text-emerald-400 transition-colors">Practice Labs</a>
+                <a href="#education" class="hover:text-emerald-400 transition-colors">Education</a>
+                <a href="#contact" class="hover:text-emerald-400 transition-colors">Contact</a>
+            </div>
 
-<main class="max-w-6xl mx-auto px-6 pt-32 pb-28 space-y-32">
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-slate-100 p-2">
+                <i data-lucide="menu" id="menu-icon"></i>
+            </button>
+        </div>
 
-<!-- HERO -->
-<section class="grid lg:grid-cols-2 gap-14 items-center">
-  <div class="space-y-7">
-    <span class="inline-flex items-center gap-2 px-3 py-1 text-xs font-mono rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      Open to DevOps Internships
-    </span>
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-slate-900 border-b border-slate-800 p-6 flex flex-col gap-4">
+            <a href="#about" class="mobile-link text-left py-2 text-lg font-medium border-b border-slate-800">About</a>
+            <a href="#skills" class="mobile-link text-left py-2 text-lg font-medium border-b border-slate-800">Learning Stack</a>
+            <a href="#labs" class="mobile-link text-left py-2 text-lg font-medium border-b border-slate-800">Practice Labs</a>
+            <a href="#education" class="mobile-link text-left py-2 text-lg font-medium border-b border-slate-800">Education</a>
+            <a href="#contact" class="mobile-link text-left py-2 text-lg font-medium border-b border-slate-800">Contact</a>
+        </div>
+    </nav>
 
-    <h1 class="text-4xl lg:text-5xl font-bold text-slate-100 leading-tight">
-      DevOps Beginner <br />
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">
-        Building Reliable Foundations
-      </span>
-    </h1>
+    <!-- Hero Section -->
+    <section id="about" class="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 overflow-hidden">
+        <div class="absolute top-0 right-0 -z-10 w-1/3 h-1/3 bg-emerald-500/5 blur-[120px] rounded-full"></div>
+        
+        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+            <div class="flex-1 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    Open to DevOps Internships
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-slate-100">
+                    DevOps Beginner <br />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">
+                        Building Reliable Foundations
+                    </span>
+                </h1>
+                <p class="text-slate-400 text-lg mb-8 max-w-xl mx-auto lg:mx-0">
+                    I'm <strong>Harsh Parashar</strong>, a BCA (Cloud Computing) student focusing on deep systems knowledge. I believe in mastering Linux, Git, and networking before scaling with high-level automation.
+                </p>
+                <div class="flex flex-wrap justify-center lg:justify-start gap-4">
+                    <a href="#labs" class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3 rounded-lg font-bold transition-all shadow-lg shadow-emerald-900/20">
+                        View Learning Labs
+                    </a>
+                    <div class="flex items-center gap-4 px-4">
+                        <a href="https://github.com/harshparashar-me" target="_blank" class="p-2 hover:text-emerald-400 transition-colors"><i data-lucide="github"></i></a>
+                        <a href="mailto:contact@harshparashar.me" class="p-2 hover:text-emerald-400 transition-colors"><i data-lucide="mail"></i></a>
+                    </div>
+                </div>
+            </div>
 
-    <p class="text-slate-400 max-w-xl leading-relaxed">
-      I’m Harsh Parashar — a BCA (Cloud Computing) student learning DevOps from first principles.
-      My focus is on Linux, Git, and cloud fundamentals, with an emphasis on understanding systems deeply before automating them.
-    </p>
+            <!-- Terminal Window -->
+            <div class="flex-1 w-full max-w-lg">
+                <div class="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden font-mono text-sm terminal-shadow">
+                    <div class="bg-slate-800/50 px-4 py-2 flex items-center justify-between border-b border-slate-800">
+                        <div class="flex gap-1.5">
+                            <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                        </div>
+                        <div class="text-slate-500 text-[10px] uppercase">harsh@portfolio:~</div>
+                    </div>
+                    <div class="p-6 text-emerald-400 space-y-3">
+                        <p><span>$</span> whoami</p>
+                        <p class="text-slate-300 ml-4">Harsh Parashar | BCA (Cloud Computing)</p>
+                        <p><span>$</span> cat goal.txt</p>
+                        <p class="text-slate-400 ml-4 italic">"To become a skilled DevOps engineer by working on real infrastructure and automation problems."</p>
+                        <p><span>$</span> ls -F current_focus/</p>
+                        <p class="text-blue-400 ml-4">linux/ git_github/ cloud_fundamentals/ networking/</p>
+                        <p><span>$</span> <span class="animate-pulse">_</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="flex flex-wrap gap-4">
-      <a href="#labs" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded transition">
-        View Learning Labs
-      </a>
-      <a href="#contact" class="px-6 py-3 border border-slate-700 rounded hover:bg-slate-800 transition">
-        Contact Me
-      </a>
-    </div>
-  </div>
+    <!-- Learning Stack -->
+    <section id="skills" class="py-20 px-6 bg-slate-900/20">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4 text-slate-100">Learning Stack</h2>
+                <p class="text-slate-400">Core areas I am currently exploring and documenting.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Skill Card 1 -->
+                <div class="p-6 bg-slate-900 border border-slate-800 rounded-xl hover:border-emerald-500/30 transition-all group">
+                    <div class="mb-4 text-emerald-400"><i data-lucide="monitor"></i></div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-100">Linux Fundamentals</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">Ubuntu</span>
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">CLI</span>
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">Permissions</span>
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">File Systems</span>
+                    </div>
+                </div>
+                <!-- Skill Card 2 -->
+                <div class="p-6 bg-slate-900 border border-slate-800 rounded-xl hover:border-emerald-500/30 transition-all group">
+                    <div class="mb-4 text-orange-400"><i data-lucide="git-branch"></i></div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-100">Version Control</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">Git</span>
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">GitHub</span>
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">Branching</span>
+                    </div>
+                </div>
+                <!-- Skill Card 3 -->
+                <div class="p-6 bg-slate-900 border border-slate-800 rounded-xl hover:border-emerald-500/30 transition-all group">
+                    <div class="mb-4 text-blue-400"><i data-lucide="cloud"></i></div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-100">Cloud Concepts</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">IAAS/PAAS</span>
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">Virtualization</span>
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">AWS Basics</span>
+                    </div>
+                </div>
+                <!-- Skill Card 4 -->
+                <div class="p-6 bg-slate-900 border border-slate-800 rounded-xl hover:border-emerald-500/30 transition-all group">
+                    <div class="mb-4 text-purple-400"><i data-lucide="server"></i></div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-100">Networking</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">DNS</span>
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">IP addressing</span>
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">HTTP/HTTPS</span>
+                    </div>
+                </div>
+                <!-- Skill Card 5 -->
+                <div class="p-6 bg-slate-900 border border-slate-800 rounded-xl hover:border-emerald-500/30 transition-all group">
+                    <div class="mb-4 text-cyan-400"><i data-lucide="code"></i></div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-100">Scripting</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">Bash Basics</span>
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">Python Fundamentals</span>
+                    </div>
+                </div>
+                <!-- Skill Card 6 -->
+                <div class="p-6 bg-slate-900 border border-slate-800 rounded-xl hover:border-emerald-500/30 transition-all group">
+                    <div class="mb-4 text-red-400"><i data-lucide="activity"></i></div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-100">DevOps Principles</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">CI/CD Theory</span>
+                        <span class="px-2 py-1 bg-slate-800/50 text-slate-400 text-[11px] rounded border border-slate-700">IaC Concepts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- TERMINAL -->
-  <div class="bg-slate-900 border border-slate-700 rounded-xl font-mono text-sm overflow-hidden shadow-xl">
-    <div class="bg-slate-800 px-4 py-2 text-xs text-slate-400">
-      harsh@portfolio:~
-    </div>
-    <div class="p-6 space-y-4">
-      <div><span class="text-emerald-400">$</span> whoami</div>
-      <div class="pl-4 text-slate-200">
-        Harsh Parashar<br />
-        <span class="text-slate-400">BCA (Cloud Computing) | DevOps Beginner</span>
-      </div>
-      <div><span class="text-emerald-400">$</span> cat goal.txt</div>
-      <div class="pl-4 text-emerald-300">
-        Become a skilled DevOps engineer by mastering fundamentals and real infrastructure.
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- Labs Section -->
+    <section id="labs" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div>
+                    <h2 class="text-3xl font-bold mb-4 text-slate-100">Practice Labs</h2>
+                    <p class="text-slate-400 max-w-md italic">Note: These represent my learning journey, not professional experience.</p>
+                </div>
+                <a href="https://github.com/harshparashar-me" target="_blank" class="flex items-center gap-2 text-emerald-400 text-sm font-bold hover:underline">
+                    Visit My Learning Repos <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Lab 1 -->
+                <div class="flex flex-col h-full bg-slate-900/40 border border-slate-800 rounded-xl p-6 hover:border-emerald-500/20 transition-all">
+                    <div class="p-2 bg-emerald-500/10 rounded-lg text-emerald-400 w-fit mb-4">
+                        <i data-lucide="book-open"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-slate-100">Linux Command Line Lab</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-1">
+                        Documented practice session focusing on user management, process monitoring, and file manipulation in Ubuntu.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-[10px] font-mono text-emerald-500/80">#Linux</span>
+                        <span class="text-[10px] font-mono text-emerald-500/80">#CLI</span>
+                        <span class="text-[10px] font-mono text-emerald-500/80">#Ubuntu</span>
+                    </div>
+                </div>
+                <!-- Lab 2 -->
+                <div class="flex flex-col h-full bg-slate-900/40 border border-slate-800 rounded-xl p-6 hover:border-emerald-500/20 transition-all">
+                    <div class="p-2 bg-emerald-500/10 rounded-lg text-emerald-400 w-fit mb-4">
+                        <i data-lucide="book-open"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-slate-100">Git Workflow Practice</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-1">
+                        Managing multi-branch repositories to understand merge conflicts and pull request cycles.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-[10px] font-mono text-emerald-500/80">#Git</span>
+                        <span class="text-[10px] font-mono text-emerald-500/80">#GitHub</span>
+                        <span class="text-[10px] font-mono text-emerald-500/80">#VersionControl</span>
+                    </div>
+                </div>
+                <!-- Lab 3 -->
+                <div class="flex flex-col h-full bg-slate-900/40 border border-slate-800 rounded-xl p-6 hover:border-emerald-500/20 transition-all">
+                    <div class="p-2 bg-emerald-500/10 rounded-lg text-emerald-400 w-fit mb-4">
+                        <i data-lucide="book-open"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-slate-100">Basic Web Deployment</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-1">
+                        Understanding how static applications are served and managed on cloud-based virtual machines.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-[10px] font-mono text-emerald-500/80">#Cloud</span>
+                        <span class="text-[10px] font-mono text-emerald-500/80">#Deployment</span>
+                        <span class="text-[10px] font-mono text-emerald-500/80">#HTTP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- ABOUT -->
-<section id="about" class="max-w-3xl">
-  <h2 class="text-2xl font-bold text-slate-100 mb-4">About Me</h2>
-  <p class="text-slate-400 leading-relaxed">
-    I am in the early stage of my DevOps journey and intentionally focusing on core fundamentals.
-    Instead of rushing tools, I prioritize understanding Linux systems, networking basics,
-    and how cloud infrastructure actually works. I document what I learn and improve incrementally.
-  </p>
-</section>
+    <!-- Education Section -->
+    <section id="education" class="py-20 px-6 bg-slate-900/20">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center text-slate-100">Academic & Self-Study</h2>
+            <div class="space-y-8">
+                <!-- Timeline Item 1 -->
+                <div class="relative pl-8 border-l border-slate-800 ml-4">
+                    <div class="absolute top-0 -left-[5px] w-[9px] h-[9px] rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+                    <div class="flex flex-col md:flex-row justify-between mb-2">
+                        <h3 class="text-xl font-bold text-slate-100">BCA (Cloud Computing)</h3>
+                        <span class="text-emerald-500 font-mono text-sm">2023 - 2026</span>
+                    </div>
+                    <p class="text-slate-200 mb-4">Undergraduate Student</p>
+                    <ul class="space-y-2">
+                        <li class="text-slate-400 text-sm flex items-start gap-2">
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i>
+                            Building core computer science fundamentals.
+                        </li>
+                        <li class="text-slate-400 text-sm flex items-start gap-2">
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i>
+                            Specializing in cloud infrastructure and networking.
+                        </li>
+                    </ul>
+                </div>
+                <!-- Timeline Item 2 -->
+                <div class="relative pl-8 border-l border-slate-800 ml-4">
+                    <div class="absolute top-0 -left-[5px] w-[9px] h-[9px] rounded-full bg-emerald-500 opacity-50"></div>
+                    <div class="flex flex-col md:flex-row justify-between mb-2">
+                        <h3 class="text-xl font-bold text-slate-100">Independent Learning</h3>
+                        <span class="text-emerald-500 font-mono text-sm">Ongoing</span>
+                    </div>
+                    <p class="text-slate-200 mb-4">DevOps Self-Study</p>
+                    <ul class="space-y-2">
+                        <li class="text-slate-400 text-sm flex items-start gap-2">
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i>
+                            Following a step-by-step roadmap from first principles.
+                        </li>
+                        <li class="text-slate-400 text-sm flex items-start gap-2">
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i>
+                            Building hands-on labs to reinforce theoretical knowledge.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- SKILLS -->
-<section id="skills">
-  <h2 class="text-2xl font-bold text-slate-100 mb-6">Current Learning Stack</h2>
-  <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-    <div class="p-4 border border-slate-800 rounded bg-slate-900">Linux fundamentals (Ubuntu)</div>
-    <div class="p-4 border border-slate-800 rounded bg-slate-900">Git & GitHub workflows</div>
-    <div class="p-4 border border-slate-800 rounded bg-slate-900">Cloud computing concepts</div>
-    <div class="p-4 border border-slate-800 rounded bg-slate-900">Basic networking (DNS, ports)</div>
-    <div class="p-4 border border-slate-800 rounded bg-slate-900">Bash & Python basics</div>
-    <div class="p-4 border border-slate-800 rounded bg-slate-900">DevOps principles</div>
-  </div>
-</section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6 text-center border-t border-slate-900">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 text-slate-100">Let’s <span class="text-emerald-500">Connect</span>.</h2>
+            <p class="text-slate-400 mb-10">
+                I’m actively seeking beginner-friendly DevOps or cloud internships where I can learn from real systems and experienced engineers.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="mailto:contact@harshparashar.me" class="bg-emerald-600 hover:bg-emerald-500 text-white px-10 py-4 rounded-lg font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-900/20">
+                    <i data-lucide="mail" class="w-5 h-5"></i> contact@harshparashar.me
+                </a>
+                <a href="https://github.com/harshparashar-me" target="_blank" class="bg-slate-800 hover:bg-slate-700 px-10 py-4 rounded-lg font-bold flex items-center justify-center gap-2 transition-all">
+                    <i data-lucide="github" class="w-5 h-5"></i> GitHub
+                </a>
+            </div>
+        </div>
+    </section>
 
-<!-- LABS -->
-<section id="labs">
-  <h2 class="text-2xl font-bold text-slate-100 mb-6">Practice Labs (Learning)</h2>
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-900 px-6 text-center">
+        <p class="text-slate-500 text-sm mb-4">
+            Built with HTML, Tailwind CSS & JS — Focused on Fundamentals.
+        </p>
+        <div class="flex justify-center gap-6 text-slate-600">
+            <a href="https://github.com/harshparashar-me" target="_blank" class="hover:text-emerald-500 transition-colors">GitHub</a>
+            <a href="https://harshparashar.me/tech/" target="_blank" class="hover:text-emerald-500 transition-colors">Portfolio</a>
+        </div>
+    </footer>
 
-  <div class="grid md:grid-cols-2 gap-6">
-    <div class="p-6 border border-slate-800 rounded-xl bg-slate-900 hover:border-emerald-500/40 transition">
-      <h3 class="text-lg font-semibold text-slate-100 mb-2">
-        Linux Command Line Practice
-      </h3>
-      <p class="text-slate-400 text-sm leading-relaxed">
-        Hands-on practice with Linux commands, permissions, directory structures,
-        and basic process management using Ubuntu environments.
-      </p>
-      <p class="mt-3 text-xs font-mono text-emerald-400">Linux · CLI · Fundamentals</p>
-    </div>
+    <!-- JavaScript for Interactions -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-    <div class="p-6 border border-slate-800 rounded-xl bg-slate-900 hover:border-emerald-500/40 transition">
-      <h3 class="text-lg font-semibold text-slate-100 mb-2">
-        Git & Version Control Practice
-      </h3>
-      <p class="text-slate-400 text-sm leading-relaxed">
-        Practicing Git workflows including commits, branches, and remote repositories
-        through guided labs and consistent documentation.
-      </p>
-      <p class="mt-3 text-xs font-mono text-emerald-400">Git · GitHub · Version Control</p>
-    </div>
-  </div>
-</section>
+        // Navbar Scroll Logic
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-nav');
+                navbar.classList.remove('py-5');
+                navbar.classList.add('py-3');
+            } else {
+                navbar.classList.remove('glass-nav');
+                navbar.classList.remove('py-3');
+                navbar.classList.add('py-5');
+            }
+        });
 
-<!-- CONTACT -->
-<section id="contact" class="text-center">
-  <h2 class="text-2xl font-bold text-slate-100 mb-4">Let’s Connect</h2>
-  <p class="text-slate-400 mb-8 max-w-xl mx-auto">
-    I’m actively seeking beginner-friendly DevOps or cloud internships where I can learn from real systems and experienced engineers.
-  </p>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
 
-  <div class="flex flex-col sm:flex-row justify-center gap-4">
-    <a href="mailto:contact@harshparashar.me" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded transition">
-      Email Me
-    </a>
-    <a href="https://github.com/harshparashar-me" class="px-6 py-3 border border-slate-700 rounded hover:bg-slate-800 transition">
-      GitHub
-    </a>
-  </div>
-</section>
+        function toggleMenu() {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            if (isOpen) {
+                mobileMenu.classList.add('hidden');
+                menuIcon.setAttribute('data-lucide', 'menu');
+            } else {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons(); // Re-render icon
+        }
 
-</main>
-
-<footer class="border-t border-slate-800 py-6 text-center text-slate-500 text-sm">
-  Built with HTML, Tailwind CSS & GitHub Pages
-</footer>
-
-<script>
-  lucide.createIcons();
-</script>
-
+        menuBtn.addEventListener('click', toggleMenu);
+        
+        // Close menu when a link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+    </script>
 </body>
 </html>
